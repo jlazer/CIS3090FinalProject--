@@ -24,6 +24,12 @@ public class Main {
         System.out.println("Select a bread [1 - 4]:");
         choice = input.nextInt();
 
+        switch(choice){
+            case 1:
+                System.out.println("Enter the quantity");
+                
+        }
+
 
         System.out.println(choice);
 
