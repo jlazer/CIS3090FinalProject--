@@ -3,59 +3,75 @@
 //5/8/19
 //Final Project
 
-
-
 package com.company;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-
+        //Initialize the variables
         int breadChoice;
         int vegetableChoice;
         int meatChoice;
+
         double totalPrice = 0.0;
+
+        String breadRestart = "";
         String vegRestart = "";
+        String meatRestart = "";
+        String customerName = "";
+        String customerBread = "";
+        String customerVegtable = "";
+        String customerMeat = "";
+        //Creating a linked list to store multiple vegetables if the customer adds more than one
+        LinkedList<String> customerVegetables = new LinkedList<String>();
+        //Using a do-while loop to run the bread selection code
+        do {
+            System.out.println("=== Select Sandwich Bread ===");
+            System.out.println("1 White Bread $1.5");
+            System.out.println("2 Wheat Bread $1.6");
+            System.out.println("3 French Bread $1.8");
+            System.out.println("4 Organic Bread $2.0");
+            System.out.print("Select a bread [1 - 4], Enter 5 to exit the program: ");
 
-        //boolean restart = false;
+            breadChoice = input.nextInt();
+            input.nextLine();
 
-        System.out.println("=== Select Sandwich Bread ===");
-        System.out.println("1 White Bread $1.5");
-        System.out.println("2 Wheat Bread $1.6");
-        System.out.println("3 French Bread $1.8");
-        System.out.println("4 Organic Bread $2.0");
-        System.out.print("Select a bread [1 - 4], Enter 5 to exit the program: ");
+            switch (breadChoice) {
+                case 1:
+                    totalPrice = 1.5;
+                    customerBread = "White Bread";
+                    break;
+                case 2:
+                    totalPrice = 1.6;
+                    customerBread = "Wheat Bread";
+                    break;
+                case 3:
+                    totalPrice = 1.8;
+                    customerBread = "French Bread";
+                    break;
+                case 4:
+                    totalPrice = 2.0;
+                    customerBread = "Organic Bread";
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("ERROR! Number must be within the range 1 - 4");
+                    break;
+            }
+            //If the user inputs a number outside of the range 1 - 5 the program will print ERROR and restart the bread selection code
+            if (breadChoice > 5|| breadChoice < 1) {
+                breadRestart = "y";
+            } else {
+                breadRestart = "n";
+            }
 
-        breadChoice = input.nextInt();
-        input.nextLine();
-
-        switch(breadChoice){
-            case 1:
-                totalPrice = 1.5;
-                break;
-            case 2:
-                totalPrice = 1.6;
-                break;
-            case 3:
-                totalPrice = 1.8;
-                break;
-            case 4:
-                totalPrice = 2.0;
-                break;
-            case 5:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("ERROR! Number must be within the range 1 - 4");
-                /*System.out.println("Please select a bread:");
-                choice = input.nextInt();
-                System.out.println("Press any key to restart.");
-                restart = input.hasNext();
-                System.out.println("Restart Value: " + restart);*/
-                break;
-        }
+        } while (breadRestart.toLowerCase().equals("y"));
 
         do {
             System.out.println("=== Select Sandwich Vegetables: ===");
@@ -74,107 +90,111 @@ public class Main {
 
             switch (vegetableChoice) {
                 case 1:
-                    System.out.print("Enter the quantity: ");
-                    int veg1Quantity = input.nextInt();
-                    totalPrice += (veg1Quantity * 0.05);
-                    //totalPrice = totalPrice + (vegQuantity1 * 0.05);
+                    totalPrice += 0.05;
+                    customerVegetables.add("red onions");
                     break;
                 case 2:
-                    System.out.print("Enter the quantity: ");
-                    int veg2Quantity = input.nextInt();
-                    totalPrice += (veg2Quantity * 0.10);
+                    totalPrice += 0.10;
+                    customerVegetables.add("olives");
                     break;
                 case 3:
-                    System.out.print("Enter the quantity: ");
-                    int veg3Quantity = input.nextInt();
-                    totalPrice += (veg3Quantity * 0.10);
+                    totalPrice += 0.10;
+                    customerVegetables.add("pickles");
                     break;
                 case 4:
-                    System.out.print("Enter the quantity: ");
-                    int veg4Quantity = input.nextInt();
-                    totalPrice += (veg4Quantity * 0.20);
+                    totalPrice += 0.20;
+                    customerVegetables.add("lettuce");
                     break;
                 case 5:
-                    System.out.print("Enter the quantity: ");
-                    int veg5Quantity = input.nextInt();
-                    totalPrice += (veg5Quantity * 0.25);
+                    totalPrice += 0.25;
+                    customerVegetables.add("green peppers");
                     break;
                 case 6:
-                    System.out.print("Enter the quantity: ");
-                    int veg6Quantity = input.nextInt();
-                    totalPrice += (veg6Quantity * 0.30);
+                    totalPrice += 0.30;
+                    customerVegetables.add("tomatoes");
                     break;
                 case 7:
-                    System.out.print("Enter the quantity: ");
-                    int veg7Quantity = input.nextInt();
-                    totalPrice += (veg7Quantity * 0.5);
+                    totalPrice += 0.50;
+                    customerVegetables.add("cheese");
                     break;
                 case 8:
-                    System.exit(0);
-                    //System.out.println("Enter the quantity");
-                    //int vegQuantity8 = input.nextInt();
                     break;
                 default:
                     System.out.println("ERROR! Number must be within the range 1 - 8");
                     break;
             }
-            input.nextLine();
-            System.out.print("Would you like to add more vegetables? Enter Y or N: ");
-            vegRestart = input.nextLine();
-            System.out.println(vegRestart);
-
+            //If the user input is 8 it will bypass the vegetable selection code otherwise it will prompt the customer for more vegetables
+            if (vegetableChoice == 8) {
+                vegRestart = "n";
+            } else if (vegetableChoice > 8 || vegetableChoice < 1) {
+                vegRestart = "y";
+            } else {
+                System.out.print("Would you like to add more vegetables? Enter Y or N: ");
+                vegRestart = input.nextLine();
+            }
         } while (vegRestart.toLowerCase().equals("y"));
 
-        System.out.println("TESTING: This is after the vegetable loop.");
-        System.out.println("");
-        System.out.println("TESTING: " + totalPrice);
-        System.out.println("TESTING: Entering Meat Selection");
+        do {
+            System.out.println("=== Select Sandwich Meat ===");
+            System.out.println("1 Ham $1.0");
+            System.out.println("2 Roasted Chicken Breast $1.1");
+            System.out.println("3 Turkey Breast $1.2");
+            System.out.println("4 Roast Beef $1.5");
+            System.out.println("5 Quit meat selection");
+            System.out.print("Select a meat [1 - 4], Enter 5 to exit the program: ");
 
-        System.out.println("=== Select Sandwich Meat ===");
-        System.out.println("1 Ham $1.0");
-        System.out.println("2 Roasted Chicken Breast $1.1");
-        System.out.println("3 Turkey Breast $1.2");
-        System.out.println("4 Roast Beef $1.5");
-        System.out.println("5 Quit meat selection");
-        System.out.print("Select a meat [1 - 4], Enter 5 to exit the program: ");
+            meatChoice = input.nextInt();
+            input.nextLine();
 
-        meatChoice = input.nextInt();
-        input.nextLine();
+            switch (meatChoice) {
+                case 1:
+                    totalPrice += 1.0;
+                    customerMeat = "Ham";
+                    break;
+                case 2:
+                    totalPrice += 1.1;
+                    customerMeat = "Roasted Chicken Breast";
+                    break;
+                case 3:
+                    totalPrice += 1.2;
+                    customerMeat = "Turkey Breast";
+                    break;
+                case 4:
+                    totalPrice += 1.5;
+                    customerMeat = "Roast Beef";
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("ERROR! Number must be within the range 1 - 8");
+                    break;
+            }
+            //If the user inputs a number outside of the range 1 - 5 the program will print ERROR and restart the meat selection code
+            if (meatChoice > 5 || meatChoice < 1) {
+                meatRestart = "y";
+            } else {
+                meatRestart = "n";
+            }
+        } while (meatRestart.toLowerCase().equals("y"));
 
-        System.out.println("TESTING: " + meatChoice);
+        System.out.print("Please enter a customer name: ");
+        customerName = input.nextLine();
 
-        switch (meatChoice) {
-            case 1:
-                totalPrice += 1.0;
-                break;
-            case 2:
-                totalPrice += 1.1;
-                break;
-            case 3:
-                totalPrice += 1.2;
-                break;
-            case 4:
-                totalPrice += 1.5;
-                break;
-            case 5:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("ERROR! Number must be within the range 1 - 8");
-                break;
+        ListIterator<String> listIterator;
+        listIterator = customerVegetables.listIterator();
+        //Outputting a receipt with the customers choices and order total
+        System.out.println("=== Order Receipt ===");
+        System.out.print("Name: " + customerName + "\nBread: " + customerBread);
+        //Using a listIterator to print the values in the customer vegetable linked list
+        while (listIterator.hasNext()) {
+            customerVegtable = listIterator.next();
+            System.out.print("\nVegetables: " + customerVegtable);
         }
-        System.out.println("TESTING: TotalPrice: " + totalPrice);
-
-
-
-
-
-
-
-
-
-
-
+        System.out.print("\nMeat: " + customerMeat);
+        //Printing the order total formatted to two decimal places
+        System.out.printf("\nOrder Total: $ %.2f", totalPrice);
+        System.out.println("");
 
     }
 }
