@@ -5,7 +5,7 @@ Final Project
 
 This program is allows a user to select ingredients for a sandwhich and they will get a list of what they ordered and the total cost of it.
 
-#Assignment:
+# Assignment:
 Assume you work part-time at a sandwich store. As the only employee who knows java programming, you help to write a sandwich ordering application for the store. 
 
 When the program starts, it first shows a list/menu of sandwich breads and their prices, then asks a user to select a bread by entering a corresponding integer number. A sample output is as follows. 
